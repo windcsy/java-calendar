@@ -15,19 +15,20 @@ public class Calendar {
 		int a, times;
 		Scanner scanner = new Scanner(System.in);
 		String s1;
+		String PROMPT = "cal>";
 		Calendar cal = new Calendar();
-
-		System.out.println("횟수를 입력하세요");
-		times = scanner.nextInt();
-
-		for (int i = 0; i < times; i++) {
+		
+		while(true) 
+		{			
 			System.out.println("달을 입력하세요");
+			System.out.print(PROMPT);
 			a = scanner.nextInt();
-
-			System.out.printf("%d 월은 %d 일 입니다\n", a, cal.getMaxDaysOfMonth(a));
+			if(a == -1)break;
+			
+			System.out.printf("%d 월은 %d 일 입니다\r\n", a, cal.getMaxDaysOfMonth(a));
 		}
 
-		System.out.println("bye");
+		System.out.println("Have a nice day");
 		scanner.close();
 	}
 }
