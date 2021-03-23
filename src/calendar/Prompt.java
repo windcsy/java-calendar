@@ -1,9 +1,12 @@
 package calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
-public class Prompt {
-	private final static String PROMT ="cal> ";
+public class Prompt {	
+	
 	/**
 	 * 
 	 * @param week 요일명
@@ -28,41 +31,103 @@ public class Prompt {
 		
 	}
 	
-	public void runPromt()
+	public void printMenu() {
+		System.out.println("+---------------------------------+");
+		System.out.println("| 1.  일정 등록");
+		System.out.println("| 2.  일정 검색");
+		System.out.println("| 3.  달력 보기");
+		System.out.println("| h.  도움말 q. 종료");
+		System.out.println("+---------------------------------+");
+	}
+	
+	public void runPromt() throws ParseException
 	{
-		int a, times, year=2017, weekday=0;
 		Scanner scanner = new Scanner(System.in);
-		String s1;
-		String PROMPT = "cal>";
-		Calendar cal = new Calendar();
+		String cmd;
+		Calendar cal = new Calendar();	
+		
+		printMenu();
 		
 		while(true) 
 		{			
-			System.out.println("연도를 입력하세요");
-			System.out.print(PROMPT);
-			year = scanner.nextInt();
 			
-			System.out.println("달을 입력하세요");
-			System.out.print(PROMPT);
-			a = scanner.nextInt();
-			System.out.println("첫째날의 요일을 입력하세요.(su, mo, tu, wd, th, fr, sa)");
-			String str_weekday = scanner.next();
-			weekday = parseDay(str_weekday);
+			cmd = scanner.next();
 			
-			if(a == -1)break;
+			if(cmd.equals("q")) {
+				break;
+			} else if(cmd.equals("1")) {
+				
+				cmdRegister(scanner, cal);
+				
+			} else if (cmd.equals("2")) {
+				
+				cmdSearch(scanner, cal);
+
+			} else if (cmd.equals("3")) {
+				
+				showCalendar(scanner, cal);
+
+			} else if (cmd.equals("h")) {
+				
+				printMenu();
+
+			}
 			
-			//System.out.printf("%d 월은 %d 일 입니다\r\n", a, cal.getMaxDaysOfMonth(a));
-			cal.printCalendar(year,a, weekday);
-			//System.out.printf("%d 월은 입니다\r\n", a, cal.printCalendar(2021,a));
+			System.out.println("CMD : 1, 2, 3, h, q");
+			
 		}
 
-		System.out.println("Have a nice day");
+		System.out.println("Thank you. Good bye~");
 		scanner.close();
 	}
 	
 	
-	public static void main(String[] args) {
-		Prompt p = new Prompt();
+	private void showCalendar(Scanner scanner, Calendar cal) {
+		int a, year=2017, weekday=0;
+		
+		System.out.println("연도를 입력하세요(exit:-1)");
+		System.out.print("YEAR> ");
+		year = scanner.nextInt();
+		if(year == -1)return;
+		
+		System.out.println("달을 입력하세요");
+		System.out.print("MONTH> ");
+		a = scanner.nextInt();
+		System.out.println("첫째날의 요일을 입력하세요.(su, mo, tu, wd, th, fr, sa)");
+		String str_weekday = scanner.next();
+		weekday = parseDay(str_weekday);
+		
+		
+		cal.printCalendar(year,a, weekday);
+		
+	}
+
+	private void cmdSearch(Scanner scanner, Calendar cal) throws ParseException {
+		System.out.println("[일정 검색]");
+		System.out.println("날짜를 입력해 주세요(yyyy-mm-dd)");		
+		String date = scanner.next();
+		
+		String plan = cal.searchPlan(date);		
+		System.out.println(plan);
+	}
+
+	private void cmdRegister(Scanner scanner, Calendar cal) throws ParseException {		
+		System.out.println("[새 일정 등록]");		
+		System.out.println("날짜를 입력해 주세요(yyyy-mm-dd)");
+		String strDate = scanner.next();
+		
+		System.out.println("일정을 입력해 주세요");
+		String plan = scanner.nextLine();
+		plan = scanner.nextLine();
+		System.out.println(plan);
+		String plan2 = plan.replace("\n", "");
+		
+		cal.registerPlan(strDate, plan2);
+		
+	}
+
+	public static void main(String[] args) throws ParseException {
+		Prompt p = new Prompt();	
 		
 		p.runPromt();
 	}
