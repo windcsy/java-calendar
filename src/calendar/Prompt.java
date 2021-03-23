@@ -1,5 +1,6 @@
 package calendar;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,21 +14,24 @@ public class Prompt {
 	 * @return 0~6(0 = 일요일, 6 = 토요일)
 	 */
 	public int parseDay(String week) {
-		
-		if(week.equals("su"))
+		switch(week) {
+		case "su":
 			return 0;
-		else if(week.equals("mo"))
+		case "mo":
 			return 1;
-		else if(week.equals("tu"))
+		case "tu":
 			return 2;
-		else if(week.equals("wd"))
+		case "wd":
 			return 3;
-		else if(week.equals("th"))
+		case "th":
 			return 4;
-		else if(week.equals("fr"))
+		case "fr":
 			return 5;
-		else 
+		case "sa":
 			return 6;
+		default:
+			return 0;
+		}
 		
 	}
 	
@@ -52,7 +56,7 @@ public class Prompt {
 		{			
 			
 			cmd = scanner.next();
-			
+						
 			if(cmd.equals("q")) {
 				break;
 			} else if(cmd.equals("1")) {
@@ -106,9 +110,15 @@ public class Prompt {
 		System.out.println("[일정 검색]");
 		System.out.println("날짜를 입력해 주세요(yyyy-mm-dd)");		
 		String date = scanner.next();
+		PlanItem plan;
 		
-		String plan = cal.searchPlan(date);		
-		System.out.println(plan);
+		plan = cal.searchPlan(date);
+		if(plan != null) {
+			System.out.println(plan.detail);
+		}
+		else {
+			System.out.println("일정이 없습니다.");
+		}
 	}
 
 	private void cmdRegister(Scanner scanner, Calendar cal) throws ParseException {		

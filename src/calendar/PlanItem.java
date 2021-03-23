@@ -1,3 +1,4 @@
+package calendar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,13 +10,18 @@ public class PlanItem {
 	public String detail;
 	public String people ="";
 	
-	public PlanItem(String strDate, String detail) {
+	public static Date getDatefromString(String strDate) {
+		Date date=null;
 		try {
-			planDate = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return date;
+	}
+	public PlanItem(String strDate, String detail) {
+		this.planDate = getDatefromString(strDate);
 		this.detail = detail;
 		
 	}
