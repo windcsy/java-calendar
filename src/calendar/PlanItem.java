@@ -9,6 +9,7 @@ public class PlanItem {
 	public Date planDate;
 	public String detail;
 	public String people ="";
+	public String strDate2;
 	
 	public static Date getDatefromString(String strDate) {
 		Date date=null;
@@ -23,6 +24,7 @@ public class PlanItem {
 	public PlanItem(String strDate, String detail) {
 		this.planDate = getDatefromString(strDate);
 		this.detail = detail;
+		this.strDate2 = strDate;
 		
 	}
 	public void addPeople(String name) {
@@ -31,5 +33,9 @@ public class PlanItem {
 	
 	public Date getDate() {
 		return planDate;
+	}
+	
+	public String saveString() {		
+		return strDate2+","+"\""+detail+"\""+"\n";
 	}
 }
